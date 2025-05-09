@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Hola, mi niña Sofi</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .contenido {
+      position: relative;
+      z-index: 1;
+      padding: 2em;
+      max-width: 800px;
+      margin: auto;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 12px;
+      margin-top: 50px;
+    }
+    h1 {
+      font-size: 2em;
+      color: #FFD700;
+    }
+    p {
+      font-size: 1.1em;
+      line-height: 1.6em;
+      text-align: justify;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="contenido">
+    <h1>Hola, mi niña Sofi:</h1>
+    <p>Quería tomarme un momento para escribirte algo que nace desde lo más profundo de mi corazón. A veces las palabras habladas se las lleva el viento, pero las que se escriben quedan, como prueba de lo que uno siente.</p>
+    <p>Quiero que sepas que eres muy especial para mí. No solo por lo que eres por fuera, sino por todo lo que llevas dentro: tu forma de ver el mundo, tu manera única de tratarme, incluso en los días grises, tu sonrisa que ilumina más que el sol (estoy seguro de ello). Agradezco mucho tenerte cerca, aunque sea en pensamientos, aunque sea en palabras.</p>
+    <p>Te valoro más de lo que imaginas. De verdad. En un mundo donde muchas personas no ven lo valioso que es alguien hasta que lo pierden, yo te miro y sé lo afortunado que soy de tenerte en mi vida. Porque tú no eres "una más", tú eres única. Y yo lo sé, lo siento, lo valoro… profundamente.</p>
+    <p>Y aunque a veces no lo diga con todas las letras, quiero que lo tengas claro: tú importas. Mucho. Eres importante para mí de una manera que no se mide con palabras, sino con todo lo que me haces sentir. Y sé que, aunque el mundo no siempre lo vea, tú sabes que yo sí. Que soy de los pocos que realmente te ve, te escucha, y te quiere de verdad.</p>
+    <p>Gracias por existir. Gracias por ser tú. Y por permitirme quererte así.</p>
+    <p><strong>Con todo mi cariño,</strong></p>
+    <p><em>PD: Con esto no quiero confundirte, ni que creas cosas raras...<br>
+    Solo quería darte ánimos para tus días grises que llevas últimamente...<br>
+    Y quería hacerte sentir valorada, perdón si me excedí con las palabras...<br>
+    Perdón si pensaste algo malo...(Creo que si lo pensaste al inicio jsjs), pero quería algo que puedas leer cuando te sientes triste.</em></p>
+    <p><strong>[ya sabes quien soy]</strong></p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    let stars = [];
+
+    function init() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      stars = Array.from({ length: 150 }).map(() => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        radius: Math.random() * 1.5 + 0.5,
+        alpha: Math.random(),
+        delta: Math.random() * 0.02
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let star of stars) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+        ctx.fill();
+        star.alpha += star.delta;
+        if (star.alpha <= 0 || star.alpha >= 1) star.delta *= -1;
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', init);
+    init();
+    draw();
+  </script>
+</body>
+</html>
